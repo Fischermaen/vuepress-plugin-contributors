@@ -1,0 +1,30 @@
+{
+  "name": "vuepress-plugin-contributors",
+  "author": "Andreas Fischer <andy@5ff.de>",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Fischermaen/vuepress-plugin-contributors.git"
+  },
+  "version": "1.0.1",
+  "main": "index.js",
+  "license": "MIT",
+  "dependencies": {
+    "cross-spawn": "^7.0.1",
+    "path": "^0.12.7",
+    "@vuepress/plugin-register-components": "^1.0.0-alpha.0"
+  },
+  "bugs": {
+    "url": "https://github.com/Fischermaen/vuepress-plugin-contributors/issues"
+  },
+  "homepage": "https://github.com/Fischermaen/vuepress-plugin-contributors#readme",
+  "description": "Display a list of all contributors ordered descending by number of contributions",
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "vuepress",
+    "vuepress-plugin",
+    "contributors"
+  ]
+}
