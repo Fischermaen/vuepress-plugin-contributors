@@ -3,9 +3,6 @@ This component allows you to add a list of all contributors. This list is sorted
 
 _Requires Vuepress 1.0+_
 
-## Demo
-![](preview.gif)
-
 ## Installation
 ```shell
 $ npm install vuepress-plugin-contributors --save
