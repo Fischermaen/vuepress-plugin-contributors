@@ -1,5 +1,5 @@
 # vuepress-plugin-contributors
-This component allows you to add a list of all contributors. This list is sorted descending by the number of contributions.
+This component allows you to add a list of all contributors, which is sorted descending by the number of contributions.
 
 _Requires Vuepress 1.0+_
 
@@ -18,5 +18,5 @@ module.exports = {
 
 ### Usage
 ```markdown
-    <contributors />
+<contributors />
 ```
