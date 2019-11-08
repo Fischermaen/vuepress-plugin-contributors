@@ -17,7 +17,7 @@
     "url": "https://github.com/Fischermaen/vuepress-plugin-contributors/issues"
   },
   "homepage": "https://github.com/Fischermaen/vuepress-plugin-contributors#readme",
-  "description": "Display a list of all contributors ordered descending by number of contributions",
+  "description": "Display a list of all contributors ordered descending by number of contributions.",
   "devDependencies": {},
   "scripts": {
     "test": "echo \"Error: no test specified\""
