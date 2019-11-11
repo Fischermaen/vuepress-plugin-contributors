@@ -1,7 +1,9 @@
 name: Node.js Package
 
 on:
-  push:
+  release:
+    types: 
+      - published
     branches: 
       - master
     tags:
