@@ -6,6 +6,9 @@ _Requires Vuepress 1.0+_
 ## Installation
 ```shell
 $ npm install vuepress-plugin-contributors --save
+
+# or, if you prefer yarn
+$ yarn add vuepress-plugin-contributors
 ```
 
 After installing, add it to your Vuepress configuration's plugin list:
@@ -16,7 +19,11 @@ module.exports = {
 }
 ```
 
-### Usage
+## Usage
 ```markdown
 <contributors />
 ```
+
+## Configuration
+
+*No configuration at the moment*
