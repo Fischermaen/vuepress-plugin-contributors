@@ -64,6 +64,8 @@ You can specify a function in case you would like to use a different avatar sour
 - user: `Object`, contains two fields `name` (String) and `email` (String)
 - avatarSize: `Integer` Size of the avatar in pixel.
 
+**Expected return value:** `String` The url to the avatar.
+
 Sample:
 
 ```js
