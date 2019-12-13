@@ -1,11 +1,11 @@
 <template>
-    <div class="contributors">
+    <span class="contributors">
         <ul>
             <li v-for="(contributor, index) of $page.contributors">
-                {{ contributor.name}}
+                <img :class="contributor.avatarClass" :src="contributor.avatarUrl" :height="$page.avatarSize"/><span class="name">{{ contributor.name }}</span><span :class="contributor.countClass">{{ contributor.count }}</span>
             </li>
         </ul>
-    </div>
+    </span>
 </template>
 
 <script>
