@@ -71,13 +71,7 @@ async function provideAvatarUrl(user, options) {
     }
 
     if (options.avatarProvider === 'github') {
-        var options = {
-            strictSSL: false,
-            json: true 
-        };
-        options.uri = `https://api.github.com/search/users?q=${user.email}+in:email`;
-        var json = await rp(options);
-        return json.items[0].avatar_url;
+        return `https://github.com/${user.name}.png?size=${avatarSize}`;
     }
 
     if (options.avatarProvider === 'gravatar') {
