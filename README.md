@@ -57,7 +57,7 @@ If set to `true` an avatarProvider has to be specified to show the avatars.
 - Type: `String|function`
 - Default: `undefinded`
 
-Following avatar sources are supported: `github`, `gitlab` or `gravatar`. In case of `github` or `gitlab` the email address of the user have to public to fetch the avatar url.
+Following avatar sources are supported: `github`, `gitlab` or `gravatar`. In case of `gitlab` the email address of the user has to public to enable the plugin to fetch the avatar url.
 
 You can specify a function in case you would like to use a different avatar source or your documentation is running on premise and you need a different url for the standard avatar-providers. This function is called with 2 parameters:
 
