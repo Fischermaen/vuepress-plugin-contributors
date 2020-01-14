@@ -5,7 +5,7 @@ const md5 = require('md5');
 
 module.exports = (options = {}, context) => ({
     async extendPageData($page) {
-        if ($page._content.match(/<\s*contributors\s*\/>/)) {
+        if ($page._content && $page._content.match(/<\s*contributors\s*\/>/)) {
             const showCount = options.showCount || false;
             const showAvatar = options.showAvatar || false;
             const contributors = [];
