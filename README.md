@@ -1,3 +1,5 @@
+![npm](https://img.shields.io/npm/v/vuepress-plugin-contributors)
+
 # vuepress-plugin-contributors
 This component allows you to add a list of all contributors, which is sorted descending by the number of contributions.
 
