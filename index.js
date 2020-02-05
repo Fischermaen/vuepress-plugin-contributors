@@ -6,30 +6,35 @@ const md5 = require('md5');
 module.exports = (options = {}, context) => ({
     async extendPageData($page) {
         if ($page._content && $page._content.match(/<\s*contributors\s*\/>/)) {
-            const showCount = options.showCount || false;
-            const showAvatar = options.showAvatar || false;
-            const contributors = [];
-            const avatarClass = 'avatar' + (showAvatar ? '' : ' hidden');
-            const countClass = 'count' + (showCount ? '' : ' hidden');
-            var output = getGitShortlog();
-            var shortLogEntries = output.split(/\r\n|\r|\n/);
-            var i;
+            const showCount = options.showCount || false,
+                  showAvatar = options.showAvatar || false,
+                  contributors = [],
+                  avatarClass = 'avatar' + (showAvatar ? '' : ' hidden'),
+                  countClass = 'count' + (showCount ? '' : ' hidden');
+            let shortLogEntries = getGitShortlog().split(/\r\n|\r|\n/),
+                i;
 
             $page.avatarSize = options.avatarSize || 32;
+            $page.avatarStyle = options.avatarStyle || '';
 
             for (i = 0; i < shortLogEntries.length; i++) {
-                var matches = shortLogEntries[i].match(/(\d+)\s*(.+)\s<(.*)>/);
+                const matches = shortLogEntries[i].match(/(\d+)\s*(.+)\s<(.*)>/);
+
                 if (matches) {
-                    var avatarUrl = '';
+                    const contributionCount = matches[1],
+                          fullName = matches[2],
+                          email = matches[3];
+                    let avatarUrl = '';
                     if (showAvatar) {
-                        avatarUrl = await provideAvatarUrl({name: matches[2], email: matches[3]}, options) || options.defaultAvatar;
+                        avatarUrl = await provideAvatarUrl({name: fullName, email: email}, options) || options.defaultAvatar;
                     }
                     contributors.push({ 
-                        count: (showCount ? matches[1] : ''), 
+                        count: (showCount ? contributionCount : ''), 
                         countClass: countClass, 
-                        name: matches[2], 
+                        name: fullName, 
                         avatarUrl: avatarUrl, 
-                        avatarClass: avatarClass });
+                        avatarClass: avatarClass
+                    });
                 }
             }
             $page.contributors = contributors;
@@ -52,8 +57,8 @@ module.exports = (options = {}, context) => ({
 });
 
 async function provideAvatarUrl(user, options) {
-    const { avatarProvider } = options;
-    const avatarSize = options.avatarSize || 32;
+    const { avatarProvider } = options,
+          avatarSize = options.avatarSize || 32;
 
     if (typeof avatarProvider === 'function') {
         var avatarUrl = await avatarProvider(user, avatarSize);
@@ -61,24 +66,32 @@ async function provideAvatarUrl(user, options) {
     }
 
     if (options.avatarProvider === 'gitlab') {
-        var options = {
-            strictSSL: false,
-            json: true 
-        };
-        options.uri = `https://www.gitlab.com/api/v4/avatar?email=${user.email}&size=${avatarSize}`;
-        var json = await rp(options);
-        return json.avatar_url;
+        return await provideGitlabAvatarUrl(user, avatarSize);
     }
 
     if (options.avatarProvider === 'github') {
-        return `https://github.com/${user.name}.png?size=${avatarSize}`;
+        return provideGithubAvatarUrl(user.name, avatarSize);
     }
 
     if (options.avatarProvider === 'gravatar') {
-        return `https://www.gravatar.com/${md5(user.email)}?s=${avatarSize}`;
+        return provideGravatarUrl(user.email, avatarSize);
     }
 
     return '';
+}
+
+const provideGithubAvatarUrl = (userName,size) => `https://github.com/${userName}.png?size=${size}`;
+
+const provideGravatarUrl = (email, size) => `https://www.gravatar.com/${md5(email)}?s=${size}`;
+
+const provideGitlabAvatarUrl = async (user, avatarSize) => {
+    const options = {
+        strictSSL: false,
+        json: true 
+    };
+    options.uri = `https://www.gitlab.com/api/v4/avatar?email=${user.email}&size=${avatarSize}`;
+    var json = await rp(options);
+    return json.avatar_url;
 }
 
 function getGitShortlog() {
