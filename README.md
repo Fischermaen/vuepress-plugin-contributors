@@ -1,3 +1,5 @@
+![npm](https://img.shields.io/npm/v/vuepress-plugin-contributors) ![GitHub Release Date](https://img.shields.io/github/release-date/Fischermaen/vuepress-plugin-contributors) ![NPM](https://img.shields.io/npm/l/vuepress-plugin-contributors)  ![GitHub contributors](https://img.shields.io/github/contributors/Fischermaen/vuepress-plugin-contributors)  ![GitHub last commit](https://img.shields.io/github/last-commit/Fischermaen/vuepress-plugin-contributors)
+
 # vuepress-plugin-contributors
 This component allows you to add a list of all contributors, which is sorted descending by the number of contributions.
 
