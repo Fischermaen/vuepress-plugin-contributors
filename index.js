@@ -86,7 +86,7 @@ function getGitShortlog() {
     try {
         shortlog = spawn.sync(
             'git',
-            ['shortlog', '-nse', '--no-merges', 'origin/master']
+            ['shortlog', '-nse', '--no-merges', 'HEAD']
         ).stdout.toString();
     } catch (e) { console.log(e); }
     return shortlog
