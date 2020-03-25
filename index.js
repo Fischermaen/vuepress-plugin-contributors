@@ -13,7 +13,7 @@ module.exports = (options = {}, context) => ({
             let shortLogEntries = getGitShortlog().split(/\r\n|\r|\n/),
                 i;
 
-            $page.avatarSize = validOptions.avatarSize;
+            $page.avatarSizeStyle = `height: ${validOptions.avatarSize}px; width: ${validOptions.avatarSize}px;`;
             $page.avatarStyle = validOptions.avatarStyle;
 
             for (i = 0; i < shortLogEntries.length; i++) {
