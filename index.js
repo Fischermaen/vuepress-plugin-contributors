@@ -36,7 +36,8 @@ module.exports = (options = {}, context) => ({
                         countClass: countClass, 
                         name: fullName, 
                         avatarUrls: avatarUrls, 
-                        avatarClass: avatarClass
+                        avatarClass: avatarClass,
+                        userProfileUrl: await provideUserProfileUrl({name: fullName, email: email}, options)
                     });
                 }
             }
@@ -58,6 +59,25 @@ module.exports = (options = {}, context) => ({
     ]
 
 });
+
+async function provideUserProfileUrl(user, options) {
+    const { userProfileUrlProvider } = options;
+
+    if (typeof userProfileUrlProvider === 'function') {
+        var userProfileUrl = await userProfileUrlProvider(user);
+        return userProfileUrl;
+    }
+
+    if (options.userProfileUrlProvider === 'gitlab') {
+        return await provideGitlabUserProfileUrl(user);
+    }
+
+    if (options.userProfileUrlProvider === 'github') {
+        return provideGithubUserProfileUrl(user.name);
+    }
+
+    return options.userProfileUrlProvider;
+}
 
 async function provideAvatarUrl(user, options) {
     const { avatarProvider } = options,
@@ -83,9 +103,13 @@ async function provideAvatarUrl(user, options) {
     return '';
 }
 
+const provideGithubUserProfileUrl = (userName) => `https://github.com/${userName}`;
+
 const provideGithubAvatarUrl = (userName,size) => `https://github.com/${userName}.png?size=${size}`;
 
 const provideGravatarUrl = (email, size) => `https://www.gravatar.com/${md5(email)}?s=${size}`;
+
+const provideGitlabUserProfileUrl = (userName) => `https://gitlab.com/${userName}`;
 
 const provideGitlabAvatarUrl = async (user, size) => {
     const options = {
@@ -114,6 +138,7 @@ const setDefaultsIfMissing = options => {
         showCount: options.showCount || false,
         showAvatar: options.showAvatar || false,
         avatarSize: options.avatarSize || 32,
-        avatarStyle: options.avatarStyle || ''
+        avatarStyle: options.avatarStyle || '',
+        userProfileUrlProvider: options.userProfileUrlProvider || '#'
     }
 }
