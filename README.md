@@ -41,7 +41,8 @@ module.exports = {
             showCount: true,
             avatarSize: 32,
             defaultAvatar: '/not-found.png', 
-            avatarProvider: 'github'
+            avatarProvider: 'github',
+            userProfileUrlProvider: 'github'
         }]
     ]
 }
@@ -87,6 +88,7 @@ const rp = require('request-promise');
         defaultAvatar: '/transparent.png'
     }]
 ```
+
 ### defaultAvatar
 
 - Type: `String`
@@ -107,3 +109,26 @@ The size of the avatars. This value is provided to the `avatarProvider` function
 - Default: `false`
 
 Should the number of commits be shown in brackets behind the name.
+
+### userProfileUrlProvider
+
+- Type: `String|function`
+- Default: `undefinded`
+
+Following user profile sources are supported: `github` or `gitlab`. In these cases the user profile url is built by adding user.name to the url.
+
+You can specify a function in case you would like to use a different user profile source:
+
+- user: `Object`, contains two fields `name` (String) and `email` (String)
+
+**Expected return value:** `String` The url to the user profile.
+
+Sample:
+
+```js
+    ['vuepress-plugin-contributors', {
+        userProfileUrlProvider: async (user) => {
+            return `http://your-server.domain/user/${user.email}`;
+        }
+    }]
+```
