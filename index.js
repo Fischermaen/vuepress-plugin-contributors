@@ -10,7 +10,7 @@ module.exports = (options = {}, context) => ({
             const contributors = [],
                   avatarClass = 'avatar' + (validOptions.showAvatar ? '' : ' hidden'),
                   countClass = 'count' + (validOptions.showCount ? '' : ' hidden');
-            let shortLogEntries = getGitShortlog().split(/\r\n|\r|\n/),
+            let shortLogEntries = getGitShortlog(validOptions.baseDir).split(/\r\n|\r|\n/),
                 i;
 
             $page.avatarSizeStyle = `height: ${validOptions.avatarSize}px; width: ${validOptions.avatarSize}px;`;
@@ -121,12 +121,12 @@ const provideGitlabAvatarUrl = async (user, size) => {
     return json.avatar_url;
 }
 
-function getGitShortlog() {
+function getGitShortlog(baseDir) {
     let shortlog
     try {
         shortlog = spawn.sync(
             'git',
-            ['shortlog', '-nse', '--no-merges', 'HEAD']
+            ['shortlog', '-nse', '--no-merges', 'HEAD', '--', baseDir]
         ).stdout.toString();
     } catch (e) { console.log(e); }
     return shortlog
@@ -139,6 +139,7 @@ const setDefaultsIfMissing = options => {
         showAvatar: options.showAvatar || false,
         avatarSize: options.avatarSize || 32,
         avatarStyle: options.avatarStyle || '',
-        userProfileUrlProvider: options.userProfileUrlProvider || '#'
+        userProfileUrlProvider: options.userProfileUrlProvider || '#',
+        baseDir: options.baseDir || ''
     }
 }

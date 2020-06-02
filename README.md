@@ -3,7 +3,7 @@
 # vuepress-plugin-contributors
 This component allows you to add a list of all contributors, which is sorted descending by the number of contributions.
 
-To get the list of contributors this plugins uses `git shortlog -nse --no-merges`. If you expect double entries due to e.g. changes of email-adresses, you may specify a `.mailmap` in the root of your project. (See [git dcumentation](https://git-scm.com/docs/git-shortlog))
+To get the list of contributors this plugins uses `git shortlog -nse --no-merges HEAD`. The shortlog is taken from the root path of the project, if you want the contributors to be retrieved only from a certain path, you can specify it with parameter `baseDir`. If you expect double entries due to e.g. changes of email-adresses, you may specify a `.mailmap` in the root of your project. (See [git dcumentation](https://git-scm.com/docs/git-shortlog))
 
 ## Installation
 ```shell
@@ -132,3 +132,10 @@ Sample:
         }
     }]
 ```
+
+### baseDir
+
+- Type: `String`
+- Default: `''`
+
+Specifies the path from where the contributors should be taken. If you have your documentation within a source-code project (e.g. in the docs folder) and you only want to list the contributors for the documentation, then value of `baseDir` has to be `docs`. 
